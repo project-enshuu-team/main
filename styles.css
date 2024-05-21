@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+
+body {
+    background-image: url("haikei.jpg");
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    text-align: left;
+}
+
+.button-container {
+    position: absolute;
+    top: 150px;
+    left: 330px;
+    margin-bottom: 20px;
+}
+
+a.point-button {
+    display: block;
+    border: none;
+	text-align: center;
+	text-decoration: none;
+    font-size: large;
+	width: 170px;
+	margin: auto;
+    padding: 30px 300px;
+	font-weight: bold;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+	background: linear-gradient(to top, rgb(216, 112, 48), #fb9e62);
+	color: #fff;
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+    border-radius: 20px;
+    cursor: pointer;
+	transition: 0.5s;
+}
+
+a.point-button:hover {
+	opacity: 0.5;
+}
+
+.game-buttons {
+    position: absolute;
+    top: 350px;
+    left: 330px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height:300px;
+    margin:0 0 1em;
+}
+
+a.game-button {
+    display: block;
+    border: none;
+	text-align: center;
+	text-decoration: none;
+    font-size: large;
+	width: 170px;
+	margin: auto;
+    padding: 30px 300px;
+	font-weight: bold;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+	background: linear-gradient(to top, rgb(233, 197, 138), #ffebc9);
+	color: #fff;
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+    border-radius: 20px;
+    cursor: pointer;
+	transition: 0.5s;
+}
+
+a.game-button:hover {
+    opacity: 0.5;
+}
