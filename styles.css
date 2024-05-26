@@ -5,6 +5,19 @@ body {
     font-family: 'M PLUS Rounded 1c', sans-serif;
     text-align: center;
 }
+header{
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+}
+.account-manage{
+    position: relative;
+    text-align: end;
+}
+a#account-page-link{
+    margin-right: 20%;
+}
 
 .container {
     max-width: 600px;
