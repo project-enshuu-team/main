@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>えびまよにサインイン/サインアップ</title>
+    <script type="module" crossorigin src="/account/assets/index-bmPYTJbV.js"></script>
+  </head>
+  <body>
+    <h1>えびまよ</h1>
+    <section id="sectionSignin">
+      <h2>アカウント設定</h2>
+      <form>
+        <div>
+          <label for="inputEmail">E-mail</label>
+          <input type="email" name="inputEmail" id="inputEmail">
+        </div>
+        <div>
+          <label for="inputPassword">パスワード</label>
+          <input type="password" name="inputPassword" id="inputPassword">
+        </div>
+        <button type="submit" id="buttonSignin" 
+aria-describedby="errorMessage">サインイン</button>
+        アカウントをお持ちではありませんか？
+        入力したメールアドレスで<button type="button" id="buttonSignup" 
+aria-describedby="errorMessage">サインアップ</button>しましょう
+        <p id="errorMessage"></p>
+      </form>
+    </section>
+    <section id="sectionUser">
+      <h2>ユーザ情報</h2>
+      <dl>
+        <dt>メールアドレス</dt>
+        <dd id="email"></dd>
+      </dl>
+    </section>
+    <section id="sectionSignout">
+      <h2>Sign out</h2>
+      <button type="button" id="buttonSignout">サインアウト</button>
+      <button type="button" id="buttonDelete">アカウント削除</button>
+    </section>
+  </body>
+</html>
