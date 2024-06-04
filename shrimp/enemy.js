@@ -1,0 +1,209 @@
+const canvas = document.getElementById("stkr-area");
+const ctx = canvas.getContext("2d");
+const speed = 2;
+
+let width;
+let height;
+let mouseX = 0;
+let mouseY = 0;
+let hue = 0;
+let ballRadius = 20;
+let gameEnded = false;
+
+//最大値から最小値までの数字をランダムに取得する関数
+function getRandomInt(min, max) {
+   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const enemyImage = new Image();
+enemyImage.src = 'imagefolder/敵えびA.png';
+
+//障害物の座標と角度を取得
+class Enemy {
+   constructor(x, y, angle) {
+      this.x = x;
+      this.y = y;
+      this.dx = speed * Math.cos(angle);
+      this.dy = speed * Math.sin(angle);
+      this.radius = 50;
+   }
+
+   //障害物を描画する
+   draw() {
+      ctx.beginPath();
+      //ボールの座標、半径、描画する始まり、内角
+      // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      // ctx.fillStyle = "#047613";
+      // ctx.fill();
+      // ctx.closePath();
+
+      ctx.drawImage(enemyImage, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+
+      //移動した座標を代入
+      this.x += this.dx;
+      this.y += this.dy;
+   }
+}
+
+const enemies = [];
+
+function enemy1() {  //下からくるボール
+   let x = canvas.width / 5 * getRandomInt(0, 5);
+   let y = canvas.height;
+   let angle = Math.PI + Math.random() * Math.PI;
+   //座標と移動するときの角度をpush
+   enemies.push(new Enemy(x, y, angle));
+}
+
+function enemy2() {  //上からくるボール
+   let x = canvas.width / 5 * getRandomInt(0, 5);
+   let y = 0;
+   let angle = Math.random() * Math.PI;
+   enemies.push(new Enemy(x, y, angle));
+}
+
+function enemy3() {  //左からくるボール
+   let x = 0;
+   let y = canvas.height / 5 * getRandomInt(0, 5);
+   let angle = (Math.random() < 0.5)
+      ? (Math.random() * (Math.PI / 2))  //0~90度を出力
+      : (3 * Math.PI / 2 + Math.random() * (Math.PI / 2));  //270~360度を出力
+   enemies.push(new Enemy(x, y, angle));
+}
+
+function enemy4() {  //右からくるボール
+   let x = canvas.width;
+   let y = canvas.height / 5 * getRandomInt(0, 5);
+
+   let angle = (Math.random() * Math.PI / 2) + (Math.random() * 3 * Math.PI / 2);
+
+   enemies.push(new Enemy(x, y, angle));
+}
+
+function drawBall() {//ボールを描画
+   let radius = 20;
+   // let delay = 20;
+   hue += 0.5;
+
+   ctx.save();
+   //ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+   //ctx.fillRect(0, 0, width, height);
+
+   //円の描写設定
+   ctx.beginPath();
+   ctx.arc(mouseX, mouseY, radius, 0, 2 * Math.PI, true);
+   ctx.closePath();
+
+   //色設定
+   hue += 0.5;
+   ctx.strokeStyle = 'hsl(' + hue + ', 50%, 50%)';
+   ctx.fillStyle = 'hsl(' + hue + ', 50%, 50%)';
+   ctx.shadowColor = 'hsl(' + hue + ', 50%, 50%)';
+   ctx.shadowBlur = 30;
+
+   //描画実行
+   ctx.stroke();
+   ctx.fill();
+   ctx.restore();
+};
+
+//1〜4の数字をランダムに出力して周りから障害物が飛んでくるようにする
+function spawnEnemy() {
+   let i = getRandomInt(1, 4);
+   switch (i) {
+      case 1:
+         enemy1();
+         break;
+      case 2:
+         enemy2();
+         break;
+      case 3:
+         enemy3();
+         break;
+      case 4:
+         enemy4();
+         break;
+   }
+}
+
+//当たり判定
+function checkCollision() {
+   for (let enemy of enemies) {
+      const dx = enemy.x - mouseX;
+      const dy = enemy.y - mouseY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < enemy.radius + ballRadius) {
+         alert("gameover");
+         location.href = 'stage.html';
+         gameEnded = true;
+         return true;
+      }
+   }
+   return false;
+}
+
+//アニメーション
+function updataCanvas() {
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
+   enemies.forEach(enemy => enemy.draw());
+   drawBall();
+}
+
+//障害物を繰り返し処理
+function gameLoop() {
+   if (!gameEnded) {
+      updataCanvas();
+      if (!checkCollision()) {  //衝突が検出されなかった場合のみループさせる
+         requestAnimationFrame(gameLoop);
+      }
+   }
+}
+
+//マウス座標の更新
+function getMousePosition(e) {
+   let rect = e.target.getBoundingClientRect();
+   mouseX = Math.floor(e.clientX - rect.left);
+   mouseY = Math.floor(e.clientY - rect.top);
+
+};
+
+function initializeBall() {
+   if (!canvas && !canvas.getContext) {
+      return false;
+   }
+
+   width = ctx.canvas.width;
+   height = ctx.canvas.height;
+
+   //ボールの初期化位置は中心
+   mouseX = width / 2;
+   mouseY = height / 2;
+
+   canvas.addEventListener('mousemove', getMousePosition, false);
+
+};
+
+function setCanvasSize() {
+   canvas.width = document.documentElement.clientWidth;
+   canvas.height = document.documentElement.clientHeight
+      - canvas.getBoundingClientRect().top;
+}
+
+function gameClear() {
+   if (!gameEnded) {
+      alert("Game Clear");
+      location.href = 'stage.html';
+      gameEnded = true;
+   }
+}
+
+setCanvasSize();
+canvas.addEventListener('resize', setCanvasSize, false);
+initializeBall();
+gameLoop();
+
+//障害物が出現する時間
+setInterval(spawnEnemy, 300);
+//ゲームが終わるまでの時間
+setTimeout(gameClear, 30000);
