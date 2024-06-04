@@ -37,7 +37,7 @@ export async function load(){
           } else {
             // docSnap.data() will be undefined in this case
             console.log("過去の保存データが見つかりませんでした");
-            return {clickValue: 0, count:0};
+            return {clickValue: 1, count:0};
         }
 
     
