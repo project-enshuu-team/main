@@ -10,6 +10,12 @@ body{
     height: 100vh;  /*ピューボートの高さを100％に設定*/
 }
 
+#ebititle {
+    position: absolute;
+    left: 450px;
+    font-size: 80px;
+}
+
 .backbuttoncolor{
     position: relative;  /*新要素に対して相対的に位置を指定*/
     height: 40px; /* 高さを40ピクセルに設定*/
@@ -30,8 +36,8 @@ body{
 
 #stage1button {
     position: absolute;
-    top: 300px;
-    left: 300px;
+    top: 38%;
+    left: 21%;
     width: 5em;
     height: 3em;
     background-color: rgb(252, 145, 106);
@@ -47,8 +53,8 @@ body{
 
 #stage2 {
     position: absolute;
-    top: 300px;
-    left: 600px;
+    top: 38%;
+    left: 43%;
     width: 5em;
     height: 3em;
     background-color: rgb(252, 145, 106);
@@ -63,8 +69,8 @@ body{
 
 #stage3 {
     position: absolute;
-    top: 300px;
-    left: 900px;
+    top: 38%;
+    left: 65%;
     width: 5em;
     height: 3em;
     background-color: rgb(252, 145, 106);
@@ -81,6 +87,7 @@ body{
 #message {
     position: absolute;
     left: 500px;
+    top: 200px;
     margin-top: 20px;
     font-size: 32px;
     color: red;
@@ -90,4 +97,5 @@ body{
     position: absolute;
     top: 10px;
     right: 10px;
+    color: #FFF;
 }

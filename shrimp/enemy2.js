@@ -227,4 +227,4 @@ startTime = Date.now();
 gameLoop();
 
 //障害物が出現する時間
-setInterval(spawnEnemy, 300);
+setInterval(spawnEnemy, 200);

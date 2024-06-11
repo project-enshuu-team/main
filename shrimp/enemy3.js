@@ -20,6 +20,9 @@ function getRandomInt(min, max) {
 const enemyImage = new Image();
 enemyImage.src = 'imagefolder/敵えびA.png';
 
+const rectangleImage = new Image();
+rectangleImage.src = 'imagefolder/syokubutu_maruta1.png';
+
 //障害物の座標と角度を取得
 class Enemy {
    constructor(x, y, angle) {
@@ -55,7 +58,30 @@ class Enemy {
    }
 }
 
+//障害物に長方形を追加
+class Rectangle {
+   constructor(x, y, width, height, dy) {
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.dy = dy;
+   }
+
+   //正方形を描写する
+   draw() {
+      ctx.save();
+      this.y += this.dy;
+      ctx.drawImage(rectangleImage, this.x, this.y, this.width, this.height);
+
+      //ctx.fillStye = 'black';
+      //ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.restore();
+   }
+}
+
 const enemies = [];
+const rectangles = [];
 
 function enemy1() {  //下からくるボール
    let x = canvas.width / 5 * getRandomInt(0, 5);
@@ -136,6 +162,15 @@ function spawnEnemy() {
    }
 }
 
+function spawnRectangle() {
+   let width = 100;
+   let height = 500;
+   let x = Math.random() * (canvas.width - width);
+   let y = -height;
+   let dy = speed;
+   rectangles.push(new Rectangle(x, y, width, height, dy));
+}
+
 //当たり判定
 function checkCollision() {
    for (let enemy of enemies) {
@@ -150,7 +185,19 @@ function checkCollision() {
          return true;
       }
    }
-   return false;
+   //return false;
+
+   for (let rect of rectangles) {
+      if (rect.x < mouseX + ballRadius &&
+         rect.x + rect.width > mouseX - ballRadius &&
+         rect.y < mouseY + ballRadius &&
+         rect.y + rect.height > mouseY - ballRadius) {
+         alert("gameover");
+         location.href = 'stageselect.html';
+         gameEnded = true;
+         return true;
+      }
+   }
 }
 
 function updateTimer() {
@@ -168,6 +215,7 @@ function updateTimer() {
 function updataCanvas() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    enemies.forEach(enemy => enemy.draw());
+   rectangles.forEach(rect => rect.draw());
    drawBall();
    updateTimer();  //残り時間の更新
 }
@@ -227,4 +275,6 @@ startTime = Date.now();
 gameLoop();
 
 //障害物が出現する時間
-setInterval(spawnEnemy, 300);
+setInterval(spawnEnemy, 200);
+
+setInterval(spawnRectangle,5000);
