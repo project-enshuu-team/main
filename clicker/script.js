@@ -32,11 +32,32 @@ function incrementCount() {
     window.save(count,clickValue);
 }
 
+function cursorincrement() {
+    count += 1;
+    document.getElementById("count").innerHTML = Math.round(count);
+}
+
+function fishingincrement() {
+    count += 5;
+    document.getElementById("count").innerHTML = Math.round(count);
+}
+
+function boatincrement() {
+    count += 10;
+    document.getElementById("count").innerHTML = Math.round(count);
+}
+
+function godincrement() {
+    count += 100;
+    document.getElementById("count").innerHTML = Math.round(count);
+}
+
 function cursorupgrade() {
     if (count >= cursorupgradeCost) {
+
         count -= cursorupgradeCost;
         cursorupgradeCost *= 1.2;
-        clickValue += 2; 
+        window.setInterval(cursorincrement, 5000);
         document.getElementById("count").innerHTML = Math.round(count);
         document.getElementById("cursorcost").innerHTML = "🍤 " + Math.round(cursorupgradeCost);
         window.save(count,clickValue);
@@ -49,7 +70,7 @@ function fishingupgrade() {
     if (count >= fishingupgradeCost) {
         count -= fishingupgradeCost;
         fishingupgradeCost *= 1.2;
-        clickValue += 10; 
+        window.setInterval(fishingincrement, 1000);
         document.getElementById("count").innerHTML = Math.round(count);
         document.getElementById("fishingcost").innerHTML = "🍤 " + Math.round(fishingupgradeCost);
         window.save(count,clickValue);
@@ -62,7 +83,7 @@ function boatupgrade() {
     if (count >= boatupgradeCost) {
         count -= boatupgradeCost;
         boatupgradeCost *= 1.2;
-        clickValue += 100; 
+        window.setInterval(boatincrement, 1000);
         document.getElementById("count").innerHTML = Math.round(count);
         document.getElementById("boatcost").innerHTML = "🍤 " + Math.round(boatupgradeCost);
         window.save(count,clickValue);
@@ -75,7 +96,7 @@ function godupgrade() {
     if (count >= godupgradeCost) {
         count -= godupgradeCost;
         godupgradeCost *= 1.2;
-        clickValue += 1000; 
+        window.setInterval(godincrement, 500);
         document.getElementById("count").innerHTML = Math.round(count);
         document.getElementById("godcost").innerHTML = "🍤 " + Math.round(godupgradeCost);
         window.save(count,clickValue);

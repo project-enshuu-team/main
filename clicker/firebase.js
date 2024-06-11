@@ -27,7 +27,7 @@ export function save(count, clickValue){
 }
 export async function load(){
 
-    if(uid == null) {console.log("ログインされていません");return}
+    if(uid == null) {console.log("ログインされていません");return {clickValue: 1, count:0};}
     let dataRef = ref(db, 'users/' + uid);
 
     let docSnap = await get(dataRef);

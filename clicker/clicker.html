@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ebimayo Clicker</title> 
+    <title>Ebimayo Clicker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <header>
     <h3><a href="../home.html">← もどる</a></h3>
 </header>
+
 <body>
     <div class="container">
-        <h1>Ebimayo Clicker</h1>
-        <div id="cookie" onclick="incrementCount()"></div>
-        <p id="count">0</p>
-        <a id="cursorupgrade" class="btn btn--red btn--border-outset" onclick="cursorupgrade()">
-            <h2>👆カーソル</h2>
-            <h4 id="cursorcost">🍤 100</h4>
-        </a>
-        <a id="fishingupgrade" class="btn btn--green btn--border-outset" onclick="fishingupgrade()">
-            <h2>🎣釣り人</h2>
-            <h4 id="fishingcost">🍤 1500</h4>
-        </a>
-        <a id="boatupgrade" class="btn btn--blue btn--border-outset" onclick="boatupgrade()">
-            <h2>⛴️漁船</h2>
-            <h4 id="boatcost">🍤 11000</h4>
-        </a>
-        <a id="godupgrade" class="btn btn--yellow btn--border-outset" onclick="godupgrade()">
-            <h2>🦐えびの神</h2>
-            <h4 id="godcost">🍤 999999</h4>
-        </a>
+        <div class="centens">
+            <h1>Ebimayo Clicker</h1>
+            <p id="cookie" onclick="incrementCount()"></p>
+            <p id="count">0</p>
+        </div>
+        <div class="item">
+            <div class="f-item">
+                <a id="cursorupgrade" class="border" onclick="cursorupgrade()">
+                    <h2 class="text">👆カーソル</h2>
+                    <h4 id="cursorcost">🍤 100</h4>
+
+                    <p class="fukidasi">5秒ごとに1個えびまよが生産されます</p>
+                </a>
+            </div>
+            <div class="f-item">
+                <a id="fishingupgrade" class="border" onclick="fishingupgrade()">
+                    <h2 class="text">🎣 釣り人</h2>
+                    <h4 id="fishingcost">🍤 1500</h4>
+
+                    <p class="fukidasi">1秒ごとに5個えびまよが生産されます</p>
+                </a>
+            </div>
+            <div class="f-item">
+                <a id="boatupgrade" class="border" onclick="boatupgrade()">
+                    <h2 class="text">⛴️ 漁船</h2>
+                    <h4 id="boatcost">🍤 11000</h4>
+
+                    <p class="fukidasi">1秒ごとに10個えびまよが生産されます</p>
+                </a>
+            </div>
+            <div class="f-item">
+                <a id="godupgrade" class="border" onclick="godupgrade()">
+                    <h2 class="text">🦐 えびの神</h2>
+                    <h4 id="godcost">🍤 999999</h4>
+
+                    <p class="fukidasi">0.5秒ごとに100個えびまよが生産されます</p>
+                </a>
+            </div>
+        </div>
     </div>
     <script type="module" defer>
-        import {save,load} from "./firebase.js"
+        import { save, load } from "./firebase.js"
         window.save = save;
         window.load = load;
     </script>
     <script src="script.js" defer></script>
-</body>   
+</body>
+
 </html>
