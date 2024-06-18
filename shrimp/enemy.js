@@ -12,6 +12,15 @@ let gameEnded = false;
 let gameDuration = 60;
 let startTime;  //秒数カウント用
 
+//データ保存処理
+let ebimoney;
+let firebaseData;
+window.addEventListener('DOMContentLoaded',async()=>{//データベースからの読み込み
+    await new Promise((resolve)=>setTimeout(resolve,500));//500msの遅延を意図的に.ログインまでの時間を稼ぐ
+    firebaseData = await window.load();
+    ebimoney = firebaseData.count;
+})
+
 //最大値から最小値までの数字をランダムに取得する関数
 function getRandomInt(min, max) {
    return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -19,6 +28,9 @@ function getRandomInt(min, max) {
 
 const enemyImage = new Image();
 enemyImage.src = 'imagefolder/敵えびA.png';
+
+const ballImage = new Image();
+ballImage.src = 'imagefolder/mushi_mijinko.png';
 
 //障害物の座標と角度を取得
 class Enemy {
@@ -40,16 +52,7 @@ class Enemy {
 
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rotation);
-
-      //ctx.beginPath();
-      //ボールの座標、半径、描画する始まり、内角
-      // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      // ctx.fillStyle = "#047613";
-      // ctx.fill();
-      // ctx.closePath();
-
       ctx.drawImage(enemyImage, - this.radius, - this.radius, this.radius * 2, this.radius * 2);
-
       ctx.restore();
       this.rotation += 0.1;
    }
@@ -91,29 +94,10 @@ function enemy4() {  //右からくるボール
 }
 
 function drawBall() {//ボールを描画
-   let radius = 20;
-   // let delay = 20;
-   hue += 0.5;
-
    ctx.save();
-   //ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-   //ctx.fillRect(0, 0, width, height);
-
-   //円の描写設定
-   ctx.beginPath();
-   ctx.arc(mouseX, mouseY, radius, 0, 2 * Math.PI, true);
-   ctx.closePath();
-
-   //色設定
-   hue += 0.5;
-   ctx.strokeStyle = 'hsl(' + hue + ', 50%, 50%)';
-   ctx.fillStyle = 'hsl(' + hue + ', 50%, 50%)';
-   ctx.shadowColor = 'hsl(' + hue + ', 50%, 50%)';
-   ctx.shadowBlur = 30;
-
    //描画実行
-   ctx.stroke();
-   ctx.fill();
+   ctx.translate(mouseX, mouseY);
+   ctx.drawImage(ballImage, -ballRadius, -ballRadius, ballRadius * 2, ballRadius * 2);
    ctx.restore();
 };
 
@@ -143,8 +127,9 @@ function checkCollision() {
       const dy = enemy.y - mouseY;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
+      //ゲームオーバー時のテキスト
       if (distance < enemy.radius + ballRadius) {
-         alert("gameover");
+         alert("えびにたべられてしまった");
          location.href = 'stageselect.html';
          gameEnded = true;
          return true;
@@ -212,9 +197,12 @@ function setCanvasSize() {
       - canvas.getBoundingClientRect().top;
 }
 
+//ゲームクリア処理
 function gameClear() {
    if (!gameEnded) {
-      alert("Game Clear");
+      alert("えびまよかいひに成功した\n1000えびまよを獲得した");
+      ebimoney += 1500;
+      window.save(ebimoney,firebaseData.clickValue);//えびまよのデータを保存
       location.href = 'stageselect.html';
       gameEnded = true;
    }
@@ -227,4 +215,4 @@ startTime = Date.now();
 gameLoop();
 
 //障害物が出現する時間
-setInterval(spawnEnemy, 300);
+setInterval(spawnEnemy, 400);

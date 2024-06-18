@@ -17,13 +17,32 @@
 
     <h1 id="ebititle">えびまよかいひ</h1>
 
-    <div id="ebimoney">所持えびまよ: <span id="money"></span></div>
-    <div><button id="stage1button">ステージ1</button></div>
+    <div id="ebimoney"><span id="money">1000</span>えびまよ</div>
+    <!-- <h1 id="stage1cost"><img src="imagefolder/cookie-BGe0OfAS.webp" width="20" height="20"> × 500が必要</h1> -->
 
-    <div><button id="stage2">ステージ2</button></div>
+    <ul class="menu-buttons">
+        <li>
+        <button id="stage1button">
+            <p>ステージ1</p>
+            <h1 id="stage1cost"><img src="imagefolder/cookie-BGe0OfAS.webp" width="20" height="20"> × 500が必要</h1>
+        </button>
+        </li>
 
-    <div><button id="stage3">ステージ3</button></div>
+        <li>
+        <button id="stage2">
+            <p>ステージ2</p>
+            <h1 id="stage2cost"><img src="imagefolder/cookie-BGe0OfAS.webp" width="20" height="20"> × 50000が必要</h1>
+        </button>
+        </li>
 
+        <li>
+        <button id="stage3">
+            <p>ステージ3</p>
+            <h1 id="stage3cost"><img src="imagefolder/cookie-BGe0OfAS.webp" width="20" height="20"> × 500000が必要</h1>
+        </button>
+        </li>
+
+    </ul>
     <div id="message"></div>
 
     <script type="module" src="firebase.js" defer></script>

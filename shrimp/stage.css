@@ -18,7 +18,7 @@ body{
 
 .backbuttoncolor{
     position: relative;  /*新要素に対して相対的に位置を指定*/
-    height: 40px; /* 高さを40ピクセルに設定*/
+    height: 60px; /* 高さを60ピクセルに設定*/
     width: 100%;  /*幅を100pxに設定 */
     background-color: rgb(252, 145, 106); /*背景色を指定*/
 
@@ -26,15 +26,16 @@ body{
 /*もどるボタンのスタイル*/
 .backbutton{
     position: relative;  /*新要素に対して相対的に位置を指定*/
-    top: 20%;   /* 上から20％の位置に配置*/
+    top: 15%;   /* 上から20％の位置に配置*/
     left: 10px;    /*左から10ピクセルの位置に配置 */
     color: #FFF;  /*/テキストの色を白に*/
     /*線を消す*/
     text-decoration: none;  /*テキストの下線を消す*/
+    font-size: 30px;
 
 }
 
-#stage1button {
+/* #stage1button {
     position: absolute;
     top: 38%;
     left: 21%;
@@ -44,10 +45,8 @@ body{
     color: #FFF;
     border-radius: 8px;
     border: none;
-    font-size: 40px;
-}
-
-#stage1button:hover {
+} */
+/* #stage1button:hover {
     opacity: 0.5;
 }
 
@@ -81,8 +80,46 @@ body{
 }
 
 #stage3:hover {
-    opacity: 0.5;
+} */
+
+.menu-buttons{
+    display: flex;  /*子要素をフレックスボックスコンテナにします*/
+    position: absolute;  /*絶対位置を設定します*/
+    top: 33%;  /*親要素の高さを40%の位置に配置します*/
+    left: 50%;  /*親要素の幅を50%の位置に配置します*/
+    transform: translateX(-52%);  /*要素を中央に揃えるために、X軸方向に自身の幅の50%分移動します*/
+    list-style: none;  /*リストスタイルを無しにします*/
+    flex-direction: row;  /*フレックスアイテムを横移動します*/
+    justify-content: center;  /*フレックスアイテムを中央にそろえます*/
+    width: 100%;  /*幅を100％に設定します*/
+    gap: 130px;  /*フレックスアイテム間の間隔を130pxにします*/
 }
+.menu-buttons  button p , .menu-buttons button h1{
+    display: block;  /*p及びh1要素をブロック要素として示します*/
+}
+.menu-buttons  button{
+    position: relative;  /*相対位置を指定します*/
+    padding: 30px;  /*30pxの内側余白を設定します*/
+    background-color: rgb(252, 145, 106);  /*背景色をRGB値で設定します*/
+    color: #FFF;  /*文字色を白にします*/
+    border-radius: 8px;  /*ボタンの角を8pxの半径でまるくします*/
+    border: none;  /*ボーダーを無しにします*/
+    font-size: 40px;  /*文字サイズを40pxに設定します*/
+
+}
+.menu-buttons button p{
+    margin-top: 10px;  /*上部の外側余白を10pxに設定します*/
+    margin-bottom: 10px;  /*下部の外側余白を10pxに設定します*/
+}
+.menu-buttons button h1{
+    font-size: 20px;  /*文字サイズを20pxにする*/
+    color: #FFF;  /*文字色を白に設定*/
+}
+
+.menu-buttons button:hover{
+    opacity: 0.5;  /*ホバー時の透明度を0.5に設定します*/
+}
+
 
 #message {
     position: absolute;
@@ -98,4 +135,29 @@ body{
     top: 10px;
     right: 10px;
     color: #FFF;
+    font-size: 30px;
 }
+
+/* #stage1cost {
+    font-size: 20px;
+    position: absolute;
+    top: 52%;
+    left: 23%;
+    color: #FFF;
+}
+
+#stage2cost {
+    font-size: 20px;
+    position: absolute;
+    top: 52%;
+    left: 43%;
+    color: #FFF;
+}
+
+#stage3cost {
+    font-size: 20px;
+    position: absolute;
+    top: 52%;
+    left: 65%;
+    color: #FFF;
+} */

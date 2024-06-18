@@ -12,6 +12,15 @@ let gameEnded = false;
 let gameDuration = 60;
 let startTime;  //秒数カウント用
 
+//データ保存処理
+let ebimoney;
+let firebaseData;
+window.addEventListener('DOMContentLoaded',async()=>{//データベースからの読み込み
+    await new Promise((resolve)=>setTimeout(resolve,500));//500msの遅延を意図的に.ログインまでの時間を稼ぐ
+    firebaseData = await window.load();
+    ebimoney = firebaseData.count;
+})
+
 //最大値から最小値までの数字をランダムに取得する関数
 function getRandomInt(min, max) {
    return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -19,6 +28,12 @@ function getRandomInt(min, max) {
 
 const enemyImage = new Image();
 enemyImage.src = 'imagefolder/敵えびA.png';
+
+const rectangleImage = new Image();
+rectangleImage.src = 'imagefolder/syokubutu_maruta2.png';
+
+const ballImage = new Image();
+ballImage.src = 'imagefolder/mushi_mijinko.png';
 
 //障害物の座標と角度を取得
 class Enemy {
@@ -55,7 +70,30 @@ class Enemy {
    }
 }
 
+//障害物に長方形を追加
+class Rectangle {
+   constructor(x, y, width, height, dy) {
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.dy = dy;
+   }
+
+   //正方形を描写する
+   draw() {
+      ctx.save();
+      this.y += this.dy;
+      ctx.drawImage(rectangleImage, this.x, this.y, this.width, this.height);
+
+      //ctx.fillStye = 'black';
+      //ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.restore();
+   }
+}
+
 const enemies = [];
+const rectangles = [];
 
 function enemy1() {  //下からくるボール
    let x = canvas.width / 5 * getRandomInt(0, 5);
@@ -91,29 +129,10 @@ function enemy4() {  //右からくるボール
 }
 
 function drawBall() {//ボールを描画
-   let radius = 20;
-   // let delay = 20;
-   hue += 0.5;
-
    ctx.save();
-   //ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-   //ctx.fillRect(0, 0, width, height);
-
-   //円の描写設定
-   ctx.beginPath();
-   ctx.arc(mouseX, mouseY, radius, 0, 2 * Math.PI, true);
-   ctx.closePath();
-
-   //色設定
-   hue += 0.5;
-   ctx.strokeStyle = 'hsl(' + hue + ', 50%, 50%)';
-   ctx.fillStyle = 'hsl(' + hue + ', 50%, 50%)';
-   ctx.shadowColor = 'hsl(' + hue + ', 50%, 50%)';
-   ctx.shadowBlur = 30;
-
    //描画実行
-   ctx.stroke();
-   ctx.fill();
+   ctx.translate(mouseX, mouseY);
+   ctx.drawImage(ballImage, -ballRadius, -ballRadius, ballRadius * 2, ballRadius * 2);
    ctx.restore();
 };
 
@@ -136,6 +155,16 @@ function spawnEnemy() {
    }
 }
 
+//丸太の生成
+function spawnRectangle() {
+   let width = 100;
+   let height = 500;
+   let x = Math.random() * (canvas.width - width);
+   let y = -height;
+   let dy = speed;
+   rectangles.push(new Rectangle(x, y, width, height, dy));
+}
+
 //当たり判定
 function checkCollision() {
    for (let enemy of enemies) {
@@ -143,14 +172,27 @@ function checkCollision() {
       const dy = enemy.y - mouseY;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
+      //ゲームオーバー時の処理
       if (distance < enemy.radius + ballRadius) {
-         alert("gameover");
+         alert("えびにたべられてしまった");
          location.href = 'stageselect.html';
          gameEnded = true;
          return true;
       }
    }
-   return false;
+   //return false;
+
+   for (let rect of rectangles) {
+      if (rect.x < mouseX + ballRadius &&
+         rect.x + rect.width > mouseX - ballRadius &&
+         rect.y < mouseY + ballRadius &&
+         rect.y + rect.height > mouseY - ballRadius) {
+         alert("えびにたべられてしまった");
+         location.href = 'stageselect.html';
+         gameEnded = true;
+         return true;
+      }
+   }
 }
 
 function updateTimer() {
@@ -168,6 +210,7 @@ function updateTimer() {
 function updataCanvas() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    enemies.forEach(enemy => enemy.draw());
+   rectangles.forEach(rect => rect.draw());
    drawBall();
    updateTimer();  //残り時間の更新
 }
@@ -212,9 +255,12 @@ function setCanvasSize() {
       - canvas.getBoundingClientRect().top;
 }
 
+//ステージクリア処理
 function gameClear() {
    if (!gameEnded) {
-      alert("Game Clear");
+      alert("えびまよかいひに成功した\n100000えびまよを手に入れた");
+      ebimoney += 150000;
+      window.save(ebimoney,firebaseData.clickValue);//えびまよのデータを保存
       location.href = 'stageselect.html';
       gameEnded = true;
    }
@@ -226,5 +272,8 @@ initializeBall();
 startTime = Date.now();
 gameLoop();
 
-//障害物が出現する時間
+//えびが出現する時間
 setInterval(spawnEnemy, 200);
+
+//丸太が出現する時間
+setInterval(spawnRectangle,20000);
